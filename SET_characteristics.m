@@ -21,11 +21,12 @@ r2=250*mega;    % tunnel resistance R2 (Ohm)
 %the V_G , Q_0 and T are kept a constant while the V is varied from Vmin to Vmax, as follows:
 Vg=0;   % gate voltage (V)
 q0=0;   % background charge q0 is assumed to be zero
-temp=10;    % temperature T (K)
+temp=310;    % temperature T (K)
 vmin=-0.5;  % drain voltage minimum Vmin (V)
 vmax=0.5;   % drain voltage maximum Vmax (V)
 NV=1000;    % number of grid from Vmin to Vmax
 dV=(vmax-vmin)/NV;  % drain voltage increment of each grid point
+Vd=zeros(1,1000);
 for iv=1:NV     % loop start for drain voltage
     Vd(iv)=vmin+iv*dV;   % drain voltage in each grid point
     % Note that loop end for drain voltage is located in the end of this program source
@@ -109,14 +110,26 @@ for iv=1:NV     % loop start for drain voltage
     end
     I(iv)=q*sumI; % I in equation (32b)
 end % end of drain voltage loop
+
 figure('Name','plot of I vs V_d','NumberTitle','off');
 plot(Vd,I); % plot of I vs V
 xlabel ('Drain voltage $V_d$', 'Interpreter', 'latex');
 ylabel ('Drain current $I_d$', 'Interpreter', 'latex');
 title ("Drain current, V_g = " + Vg + " V");
+
+%% Aqui saco los valores de corriente y tension
+Itransp=I';
+Vdtransp=Vd';
+
+graficaIvsV=table(Itransp,Vdtransp);
+
+writetable(graficaIvsV,'CorrientevsTension.xls');
+
+
 for iv=1:NV-1
     dIdV(iv)=(I(iv+1)-I(iv))/dV; % calculation of dI/dV
 end
+
 figure('Name','plot of dI/dV vs V_d','NumberTitle','off');
 plot(Vd(1,1:NV-1),dIdV);
 xlabel ('Drain voltage $V_d$', 'Interpreter', 'latex');

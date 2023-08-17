@@ -7,11 +7,14 @@ function tunneling_rate = f_tunnel(j,n,V,Vg)
 %   If j = 3, f_tunnel calculates the tunneling rate from dot to drain
 %   If j = 4, f_tunnel calculates the tunneling rate from drain to dot
 
-cg = 0.6; % gate capacitance
-cd = 0.6; % drain capacitance
-cs = 0.6; % source capacitance
+%cg = 0.8; % gate capacitance
+%cd = 0.8; % drain capacitance
+cs = 0.8; % source capacitance
 c = cg+cd+cs; % total capacitance
 c = cg+cd+cs;
+
+
+
 %delta energy source->dot
 dE1 = -(-n+cg*Vg+cd*V)/c+5/c;
 %delta energy dot->source
